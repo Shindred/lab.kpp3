@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>My Google Maps</title>
+        <style>
+            #map{
+                height:400px;
+                width:100%;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>My Google Map</h1>
+        <div id="map"></div>
+        <script>
+            let map;
+            function initMap(){
+                var options = {
+                    zoom:8,
+                    center:{lat:49.233083,lng:28.468217}
+                }
+                map = new google.maps.Map(document.getElementById("map"), options);
+            }
+        </script>
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpE2OU2Ry6FlFizeTMNxI6gbZEmLdwDCM&callback=initMap">
+        </script>
+        <script>
+                fetch('https://api.openweathermap.org/data/2.5/weather?q=Vinnytsia&appid=1b5ee5a1a74d624a74750350327ea372')
+                .then(function(response) {
+                    response.json().then(function(data) {
+
+                        console.log(data);
+                        const icon = data['weather'][0]['icon'];
+                        const iconUrl = `http://openweathermap.org/img/w/${icon}.png`;
+                        console.log(iconUrl);
+
+                        var marker = new google.maps.Marker({
+                            position:{lat:49.233083,lng:28.468217},
+                            map:map,
+                            icon: iconUrl
+                        });
+                });
+            });
+        </script>
+    </body>
+</html>
